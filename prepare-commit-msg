@@ -1,0 +1,29 @@
+#!/bin/sh
+#The issue prefix to look for. This must be edited to match your project.
+PROJECT_PREFIX=PBCD
+ISSUE_PREFIX=$PROJECT_PREFIX-
+#At which line the issue should be inserted. Usually either "1" or "3".
+INSERT_AT_LINE=1
+#A separator which will be added after the issue is inserted. For readability.
+COMMIT_TEXT_SEPARATOR=": "
+
+#Check if it's a "fixup" or "squash" commit. If so we shouldn't alter anything.
+FIRST_LINE=`head -n 1 "$1"`
+if [[ x$FIRST_LINE == xfixup!* || x$FIRST_LINE == xsquash!* ]]
+then
+ exit
+fi
+
+BRANCH_NAME=`git symbolic-ref HEAD 2>/dev/null | cut -d"/" -f 3`
+ISSUE_NAME=`echo $BRANCH_NAME | grep -o "${ISSUE_PREFIX}[0-9]*"`
+
+if [[ x$ISSUE_NAME != x ]]
+then
+ #Insert any needed new lines.
+ for (( i=1; i<${INSERT_AT_LINE}; i++ ))
+ do
+    sed -i '1i \
+' "$1"
+ done
+ sed -i "${INSERT_AT_LINE}i ${ISSUE_NAME}${COMMIT_TEXT_SEPARATOR}" "$1"
+fi
