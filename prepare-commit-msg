@@ -2,8 +2,6 @@
 #The issue prefix to look for. This must be edited to match your project.
 PROJECT_PREFIX=PBCD
 ISSUE_PREFIX=$PROJECT_PREFIX-
-#At which line the issue should be inserted. Usually either "1" or "3".
-INSERT_AT_LINE=1
 #A separator which will be added after the issue is inserted. For readability.
 COMMIT_TEXT_SEPARATOR=": "
 
@@ -19,11 +17,7 @@ ISSUE_NAME=`echo $BRANCH_NAME | grep -o "${ISSUE_PREFIX}[0-9]*"`
 
 if [[ x$ISSUE_NAME != x ]]
 then
- #Insert any needed new lines.
- for (( i=1; i<${INSERT_AT_LINE}; i++ ))
- do
-    sed -i '1i \
-' "$1"
- done
- sed -i "${INSERT_AT_LINE}i ${ISSUE_NAME}${COMMIT_TEXT_SEPARATOR}" "$1"
+ #Prepend issue name
+ sed -i -e "1i\\
+  ${ISSUE_NAME}${COMMIT_TEXT_SEPARATOR}" "$1"
 fi
