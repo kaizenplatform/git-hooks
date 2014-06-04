@@ -18,6 +18,9 @@ ISSUE_NAME=`echo $BRANCH_NAME | grep -o "${ISSUE_PREFIX}[0-9]*"`
 if [[ x$ISSUE_NAME != x ]]
 then
  #Prepend issue name
- sed -i -e "1i\\
-  ${ISSUE_NAME}${COMMIT_TEXT_SEPARATOR}" "$1"
+ head -n 1 "$1" | egrep "${ISSUE_NAME}${COMMIT_TEXT_SEPARATOR}"
+ if [ $? != 0 ]; then
+  sed -i -e "1i\\
+    ${ISSUE_NAME}${COMMIT_TEXT_SEPARATOR}" "$1"
+ fi
 fi
