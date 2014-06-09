@@ -9,12 +9,11 @@ PUSH_COMMAND=$(ps -ocommand= -p $PPID)
 
 IS_DESTRUCTIVE='-f|--force|--delete'
 
-WILL_REMOVE_PROTECTED_BRANCH=':'$PROTECTED_BRANCH
-
 for i in "${PROTECTED_BRANCHES[@]}"
 do
 
     PROTECTED_BRANCH=$i
+    WILL_REMOVE_PROTECTED_BRANCH=':'$PROTECTED_BRANCH
 
     # エラーメッセージを定義
     MESSAGE="You CAN NOT '$PUSH_COMMAND' to '$PROTECTED_BRANCH'. You should 'git fetch && git merge origin $PROTECTED_BRANCH' first, then 'git push' without force option again."
