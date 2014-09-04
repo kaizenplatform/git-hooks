@@ -10,8 +10,8 @@
 
 # commit message has to start with either "XXX-123:" or "NOJIRA:" or "Merge branch"
 test "" = "$(head -1 "$1" | grep -vE '^([A-Z]+\-[0-9]+:|NOJIRA:|HOTFIX:|Merge branch).+')" || {
-	echo >&2 'Aborting due to invalid commit message.'
-	echo >&2 '--> Commit message needs to be prefixed by JIRA number.'
-        echo >&2 '    e.g. "PBCD-345: blah" or "NOJIRA: blah" or "HOTFIX: blah"'
-	exit 1
+  echo >&2 'Aborting due to invalid commit message.'
+  echo >&2 '--> Commit message needs to be prefixed by JIRA number.'
+  echo >&2 '    e.g. "PBCD-345: blah" or "NOJIRA: blah" or "HOTFIX: blah"'
+  exit 1
 }
