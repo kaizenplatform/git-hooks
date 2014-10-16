@@ -9,10 +9,10 @@
 # To enable this hook, rename this file to "commit-msg".
 
 # commit message has to start with either "XXX-123:" or "NOJIRA:" or "Merge branch"
-test "" = "$(head -1 "$1" | grep -vE '^((fixup\!|squash\!) )?([A-Z]+\-[0-9]+:|#[0-9]+ |NOPR:|NOJIRA:|HOTFIX:|Merge branch).+')" || {
+test "" = "$(head -1 "$1" | grep -vE '^((fixup\!|squash\!) )?([A-Z]+\-[0-9]+:|NOPR:|NOJIRA:|HOTFIX:|Merge branch).+')" || {
   echo >&2 'Aborting due to invalid commit message.'
   echo >&2 '--> Commit message needs to be prefixed by either pull-request or JIRA number.'
-  echo >&2 '    e.g. "#123 blah" or "GH-123: blah" or "NOPR: blah" or "HOTFIX: blah"'
+  echo >&2 '    e.g. "GH-123: blah" or "NOPR: blah" or "HOTFIX: blah"'
   echo >&2 '--> Rejected commit message is...'
   cat $1 | while read line; do
     [ `expr "$line" : "^#"` -gt 0 ] && break
