@@ -3,7 +3,7 @@
 # Branch names to protect
 PROTECTED_BRANCHES=( protect-from-force-push-test master deployment/qa deployment/production deployment/demo )
 
-CURRENT_BRANCH=$(git symbolic-ref HEAD | sed -e 's,.*/\(.*\),\1,')
+CURRENT_BRANCH=$(git symbolic-ref --short HEAD)
 
 PUSH_COMMAND=$(ps -ocommand= -p $PPID)
 
